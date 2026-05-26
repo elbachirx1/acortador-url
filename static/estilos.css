@@ -48,12 +48,34 @@
   border: none;
 }
 
+.grupo-fecha {
+  margin-top: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.etiq-fecha {
+  font-size: 15px;
+ }
+
+ .input-fecha {
+  padding: 8px 12px;
+  font-size: 15px;
+  border: 2px solid #ccc;
+  background-color: white;
+  outline: none;
+ }
+
 .seccion-info {
   align-items: center;
   text-align: left;
   margin-left: 20%;
   margin-right: 20%;
 }
+
 
 .faq-elemento {
   border-bottom: 1px solid #dbdbdb;

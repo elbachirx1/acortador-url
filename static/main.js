@@ -41,6 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // cogemos el texto insertado y lo limpiamos de espacios
         const urlOriginal = cajonTexto.value.trim();
 
+        // captar dia y hora
+        const fechaCaducidad = document.getElementById('fecha-caducidad').value;
+
         if (urlOriginal === '') {
             alert('ERROR | primero tienes que insertar un enlace');
             return;
@@ -59,7 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     'Content-Type': 'application/json',
                 },
                 // Empaquetamos la URL en un formato (JSON)  Python pueda leer
-                body: JSON.stringify({ url: urlOriginal })
+                body: JSON.stringify({
+                    url: urlOriginal,
+                    expires_at: fechaCaducidad ? fechaCaducidad : null
+                })
             });
 
             // Esperamos a que Python procese, guarde en Supabase y nos conteste
@@ -71,19 +77,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 enlaceNuevo.href = datos.short_url;
                 enlaceNuevo.textContent = datos.short_url;
 
+                // Llamamos a la API usando la nueva url corta
+                // le pedimos tamaño 150x150px
                 const urlApiQr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(datos.short_url)}`;
                 imagenQR.src = urlApiQr;
 
+                // configuramos el boton de descarga
                 botonDescargarQr.onclick = async function() {
                     try {
                         const resImg = await fetch(urlApiQr);
-                        const blob = await resImg.blob(); // Convertimos la imagen en un archivo descargable
+                        const blob = await resImg.blob(); // convertir la imagen en un archivo descargable
                         const urlDescarga = window.URL.createObjectURL(blob);
 
                         const linkTemporal = document.createElement('a');
                         linkTemporal.href = urlDescarga;
-                        linkTemporal.download = `qr-mascorto.png`; // Nombre del archivo que se bajará
-                        linkTemporal.click(); // Forzamos la descarga del usuario
+                        linkTemporal.download = `qr-mascorto.png`; // nombre del archivo que se bajará
+                        linkTemporal.click(); // forzamos la descarga del usuario
                     } catch (e) {
                         alert('No se pudo descargar el QR directamente. Puedes hacer clic derecho sobre él para guardarlo.');
                     }
@@ -93,6 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 // limpiamos el input de texto para que puedan meter otro enlace nuevo
                 cajonTexto.value = '';
+                document.getElementById('fecha-caducidad').value = ''; // limpiar input de fecha
             } else { // si nos devuelve error
                 alert(datos.ERROR || 'Algo salió mal al acortar.');
             }
@@ -100,14 +110,13 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             //  salta si el servidor de Python está apagado o si el usuario no tiene internet
             console.error('Problema detectado:', error);
-            alert('Hubo un problema de conexión. Por favor, revisa tu internet o inténtalo de nuevo en unos minutos.');
+            alert('Hubo un problema de conexión.');
         } finally {
             // volvemos a dejar el boton como antes
             botonAcortar.textContent = 'Acortar';
             botonAcortar.disabled = false;
         }
     });
-
 });
 
 
