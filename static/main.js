@@ -58,6 +58,8 @@ document.addEventListener('DOMContentLoaded', function() {
             fechaParaServidor = fechaLocal.toISOString();
         }
 
+        const passwordInput = document.getElementById('password-proteccion').value.trim()
+
         if (urlOriginal === '') {
             alert('ERROR | primero tienes que insertar un enlace');
             return;
@@ -78,7 +80,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Empaquetamos la URL en un formato (JSON)  Python pueda leer
                 body: JSON.stringify({
                     url: urlOriginal,
-                    expires_at: fechaParaServidor
+                    expires_at: fechaParaServidor,
+                    password: passwordInput ? passwordInput : null
                 })
             });
 
@@ -128,6 +131,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // limpiamos el input de texto para que puedan meter otro enlace nuevo
                 cajonTexto.value = '';
                 document.getElementById('fecha-caducidad').value = ''; // limpiar input de fecha
+                document.getElementById('password-proteccion').value = '';
+
             } else { // si nos devuelve error
                 alert(datos.ERROR || 'Algo salió mal al acortar.');
             }

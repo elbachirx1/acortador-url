@@ -26,11 +26,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 20px;
 }
 
 .grupo-input {
   display: flex;
-  width: 700px;
+  width: 100%;
+  gap: 10px;
 }
 
 .input-form {
@@ -38,6 +40,14 @@
   padding: 12px 20px;
   font-size: 15px;
   border: 2px solid #ccc;
+}
+
+.site-form {
+  width: 100%;
+  max-width: 700px; 
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
 }
 
 .boton-acortar {
@@ -49,7 +59,6 @@
 }
 
 .grupo-fecha {
-  margin-top: 20px;
   text-align: center;
   display: flex;
   justify-content: center;
@@ -96,7 +105,6 @@
   text-align: center;
 }
 
-/* Pantalla del candado (password.html) */
 .seccion-candado {
   margin-top: 80px;
 }
@@ -121,4 +129,13 @@
 
 .boton-desbloquear {
   margin-top: 15px;
+}
+
+.input-form-password {
+  padding: 10px;
+  width: 100%;
+  max-width: 250px;
+  font-size: 15px;
+  border: 2px solid #ccc;
+  text-align: center;
 }
