@@ -85,3 +85,40 @@
 .faq-pregunta:hover {
   color: rgb(112, 202, 255);
 }
+
+.grupo-password {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.input-password-crear {
+  width: 250px;
+  text-align: center;
+}
+
+/* Pantalla del candado (password.html) */
+.seccion-candado {
+  margin-top: 80px;
+}
+
+.error-mensaje {
+  color: red;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.formulario-password {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-password-desbloquear {
+  width: 300px;
+  text-align: center;
+}
+
+.boton-desbloquear {
+  margin-top: 15px;
+}

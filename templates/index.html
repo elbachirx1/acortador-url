@@ -37,6 +37,9 @@
             class="input-fecha"
           />
         </div>
+        <div class="grupo-password">
+          <input id="password-proteccion" type="text" placeholder="Contraseña (opcional)" class="input-form-password">
+        </div>
       </form>
     </div>
     <br /><br />
@@ -165,17 +168,14 @@
         </p>
       </details>
     </div>
+
     {% if error %}
     <script>
       // Mostramos un popup nativo de Chrome/navegador
       const irAlInicio = confirm(
-        "AVISO\n\n{{ error }}\n\n¿Quieres ir a la página principal de MasCorto para crear un enlace nuevo?",
+        "AVISO\n\n{{ error }}",
       );
 
-      // Si el usuario le da a "Aceptar", recargamos la web limpia
-      if (irAlInicio) {
-        window.location.href = "/";
-      }
     </script>
     {% endif %}
     <script src="/static/main.js"></script>
