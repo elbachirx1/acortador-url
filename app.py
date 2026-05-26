@@ -49,9 +49,8 @@ def url_corta():
         url_acortada = request.host_url + codigo_corto
         return jsonify({'short_url': url_acortada}), 200
     
-    except Exception as e:
-        print("EL ERROR REAL ES:", str(e)) # Esto saldrá en la terminal negra de Render
-        return jsonify({'error': f'Detalle del error: {str(e)}'}), 500
+    except:
+        return jsonify({'ERROR': 'Hubo un error al guardar la URL.'}), 500
          
 
 @app.route('/<short_code>')
