@@ -15,8 +15,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Le metemos un texto y un enlace vacío que luego rellenaremos con la url corta
     cajaResultado.innerHTML = `
-        <p style="font-size: 18px; margin-bottom: 5px; color: #333;">Aquí tienes tu enlace:</p>
-        <a id="enlace-nuevo" href="#" target="_blank" style="font-size: 22px; font-weight: bold; color: rgb(112, 202, 255); text-decoration: none;"></a>
+        <p style="font-size: 18px; margin-bottom: 5px; color: #333;">¡Aquí tienes tu enlace!</p>
+        <a id="enlace-nuevo" href="#" target="_blank" style="font-size: 22px; font-weight: bold; color: rgb(112, 202, 255); text-decoration: none; display: block; margin-bottom: 15px;"></a>
+        
+        <div id="contenedor-qr" style="margin: 20px 0;">
+            <img id="imagen-qr" src="" alt="Código QR" style="border: 4px solid #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); max-width: 150px; display: inline-block;">
+        </div>
+
+        <button id="boton-descargar-qr" type="button" style="padding: 8px 15px; font-size: 14px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 4px;">
+            Descargar Código QR
+        </button>
     `;
 
     // lo pegamos en la pagina justo debajo del formulario
@@ -24,6 +32,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // guardamos ese enlace vacio en una variable para cambiarle el texto mas adelante 
     const enlaceNuevo = document.getElementById('enlace-nuevo');
+    const imagenQR = document.getElementById('imagen-qr');
+    const botonDescargarQr = document.getElementById('boton-descargar-qr');
 
     // hacemos que el boton este atento a cuando el usuario le haga click
     botonAcortar.addEventListener('click', async function () {
@@ -61,6 +71,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 enlaceNuevo.href = datos.short_url;
                 enlaceNuevo.textContent = datos.short_url;
 
+                const urlApiQr = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(datos.short_url)}`;
+                imagenQR.src = urlApiQr;
+
+                botonDescargarQr.onclick = async function() {
+                    try {
+                        const resImg = await fetch(urlApiQr);
+                        const blob = await resImg.blob(); // Convertimos la imagen en un archivo descargable
+                        const urlDescarga = window.URL.createObjectURL(blob);
+
+                        const linkTemporal = document.createElement('a');
+                        linkTemporal.href = urlDescarga;
+                        linkTemporal.download = `qr-mascorto.png`; // Nombre del archivo que se bajará
+                        linkTemporal.click(); // Forzamos la descarga del usuario
+                    } catch (e) {
+                        alert('No se pudo descargar el QR directamente. Puedes hacer clic derecho sobre él para guardarlo.');
+                    }
+                };
+
                 cajaResultado.style.display = 'block';
 
                 // limpiamos el input de texto para que puedan meter otro enlace nuevo
@@ -77,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function() {
             // volvemos a dejar el boton como antes
             botonAcortar.textContent = 'Acortar';
             botonAcortar.disabled = false;
-
         }
     });
 
