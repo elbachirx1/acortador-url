@@ -32,6 +32,7 @@ def url_corta():
     data = request.get_json()
     url_larga = data.get('url')
     fecha_caducidad = data.get('expires_at')
+    password_proteccion = data.get('password')
     
     if not url_larga:
         return jsonify({'ERROR': 'Por favor, ingresa una URL válida'}), 400
@@ -46,7 +47,8 @@ def url_corta():
         supabase.table('urls').insert({
             'short_code': codigo_corto,
             'original_url': url_larga,
-            'expires_at': fecha_caducidad if fecha_caducidad else None
+            'expires_at': fecha_caducidad if fecha_caducidad else None,
+            'password': password_proteccion if password_proteccion else None
         }).execute()
     
         url_acortada = request.host_url + codigo_corto
@@ -56,14 +58,15 @@ def url_corta():
         return jsonify({'ERROR': 'Hubo un error al guardar la URL.'}), 500
          
 
-@app.route('/<short_code>')
+@app.route('/<short_code>', methods=['GET', 'POST'])
 def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
     try:
-        respuesta = supabase.table('urls').select('original_url', 'expires_at').eq('short_code', short_code).execute()
+        respuesta = supabase.table('urls').select('original_url', 'expires_at', 'password').eq('short_code', short_code).execute()
     
         if len(respuesta.data) > 0:
             url_original = respuesta.data[0]['original_url']
             fecha_limite_str = respuesta.data[0]['expires_at']
+            password_db = respuesta.data[0].get('password')
             
             if fecha_limite_str:
                 fecha_limite_limpia = fecha_limite_str.replace('Z', '').split('+')[0]
@@ -72,6 +75,16 @@ def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
                 
                 if fecha_actual > fecha_limite:
                     return render_template('index.html', error="Lo sentimos, este enlace ha caducado de forma definitiva."), 410
+                
+            if password_db:
+                if request.method == 'GET':
+                    return render_template('password.html', short_code=short_code)
+                elif request.method == 'POST':
+                    password_ingresada = request.form.get('password_ingresada')
+                    if password_ingresada == password_db:
+                        return redirect(url_original)
+                    else:
+                        return render_template('password.html', short_code=short_code, error="Contraseña incorrecta. Inténtalo de nuevo.")                    
                 
             return redirect(url_original)
         
