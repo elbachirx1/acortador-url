@@ -42,7 +42,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const urlOriginal = cajonTexto.value.trim();
 
         // captar dia y hora
-        const fechaCaducidad = document.getElementById('fecha-caducidad').value;
+        const fechaCaducidadInput = document.getElementById('fecha-caducidad').value;
+        let fechaParaServidor = null;
+
+        // Si el usuario eligió una fecha, la traducimos a Horario Universal (UTC)
+        if (fechaCaducidadInput) {
+            const fechaLocal = new Date(fechaCaducidadInput);
+            fechaParaServidor = fechaLocal.toISOString();
+        }
 
         if (urlOriginal === '') {
             alert('ERROR | primero tienes que insertar un enlace');
@@ -64,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Empaquetamos la URL en un formato (JSON)  Python pueda leer
                 body: JSON.stringify({
                     url: urlOriginal,
-                    expires_at: fechaCaducidad ? fechaCaducidad : null
+                    expires_at: fechaParaServidor
                 })
             });
 
