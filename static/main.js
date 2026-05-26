@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px;">
             <a id="enlace-nuevo" href="#" target="_blank" style="font-size: 22px; font-weight: bold; color: rgb(112, 202, 255); text-decoration: none;"></a>
             <button id="boton-copiar" type="button" style="padding: 6px 12px; font-size: 14px; cursor: pointer; background-color: #eee; color: #333; border: 1px solid #ccc; border-radius: 4px; font-weight: bold;">
-                📋 Copiar
+                Copiar
             </button>
         </div>
         
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const enlaceNuevo = document.getElementById('enlace-nuevo');
     const imagenQR = document.getElementById('imagen-qr');
     const botonDescargarQr = document.getElementById('boton-descargar-qr');
+    const botonCopiar = document.getElementById('boton-copiar');
 
     // hacemos que el boton este atento a cuando el usuario le haga click
     botonAcortar.addEventListener('click', async function () {
@@ -89,6 +90,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // rellenamos el espacio vacio con lo que nos dio python
                 enlaceNuevo.href = datos.short_url;
                 enlaceNuevo.textContent = datos.short_url;
+
+                // logica de boton copiar
+                botonCopiar.onclick = function() {
+                    navigator.clipboard.writeText(datos.short_url).then(() => {
+                        botonCopiar.textContent='Copiado!';
+                        // a los 2 seg vuelve a poner copiar
+                        setTimeout(() => {
+                            botonCopiar.textContent = 'Copiar'
+                        }, 2000);
+                    });
+                };
 
                 // Llamamos a la API usando la nueva url corta
                 // le pedimos tamaño 150x150px
