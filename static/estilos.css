@@ -1,0 +1,65 @@
+.site-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: rgb(235, 235, 235);
+  padding: 15px 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-bottom: 5px solid rgb(112, 202, 255);
+}
+
+.logo-img {
+  height: 40%;
+  width: 50%;
+  display: block;
+}
+
+.hero-seccion {
+  text-align: center;
+}
+
+.seccion-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grupo-input {
+  display: flex;
+  width: 700px;
+}
+
+.input-form {
+  flex-grow: 1;
+  padding: 12px 20px;
+  font-size: 15px;
+  border: 2px solid #ccc;
+}
+
+.boton-acortar {
+  padding: 12px 25px;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: rgb(112, 202, 255);
+  border: none;
+}
+
+.seccion-info {
+  align-items: center;
+  text-align: left;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.faq-elemento {
+  border-bottom: 1px solid #dbdbdb;
+  padding: 12px 0;
+}
+
+.faq-pregunta:hover {
+  color: rgb(112, 202, 255);
+}

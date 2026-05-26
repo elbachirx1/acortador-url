@@ -1,0 +1,8 @@
+# Ocultar contraseñas
+.env
+
+# Ocultar carpetas internas de Python
+__pycache__/
+*.pyc
+.venv/
+venv/
