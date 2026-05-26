@@ -63,7 +63,7 @@ def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
     
         if len(respuesta.data) > 0:
             url_original = respuesta.data[0]['original_url']
-            fecha_limite_str = respuesta.data['expires_at']
+            fecha_limite_str = respuesta.data[0]['expires_at']
             
             if fecha_limite_str:
                 fecha_limite_limpia = fecha_limite_str.replace('Z', '').split('+')[0]
