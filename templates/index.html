@@ -28,8 +28,14 @@
           <button type="button" class="boton-acortar">Acortar</button>
         </div>
         <div class="grupo-fecha">
-          <label for="fecha-caducidad" class="etiq-fecha">¿Quando quieres que caduque? (Opcional):</label>
-          <input id="fecha-caducidad" type="datetime-local" class="input-fecha">
+          <label for="fecha-caducidad" class="etiq-fecha"
+            >¿Quando quieres que caduque? (Opcional):</label
+          >
+          <input
+            id="fecha-caducidad"
+            type="datetime-local"
+            class="input-fecha"
+          />
         </div>
       </form>
     </div>
@@ -159,6 +165,19 @@
         </p>
       </details>
     </div>
+    {% if error %}
+    <script>
+      // Mostramos un popup nativo de Chrome/navegador
+      const irAlInicio = confirm(
+        "AVISO\n\n{{ error }}\n\n¿Quieres ir a la página principal de MasCorto para crear un enlace nuevo?",
+      );
+
+      // Si el usuario le da a "Aceptar", recargamos la web limpia
+      if (irAlInicio) {
+        window.location.href = "/";
+      }
+    </script>
+    {% endif %}
     <script src="/static/main.js"></script>
   </body>
 </html>

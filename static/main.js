@@ -16,7 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Le metemos un texto y un enlace vacío que luego rellenaremos con la url corta
     cajaResultado.innerHTML = `
         <p style="font-size: 18px; margin-bottom: 5px; color: #333;">¡Aquí tienes tu enlace!</p>
-        <a id="enlace-nuevo" href="#" target="_blank" style="font-size: 22px; font-weight: bold; color: rgb(112, 202, 255); text-decoration: none; display: block; margin-bottom: 15px;"></a>
+        
+        <div style="display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 15px;">
+            <a id="enlace-nuevo" href="#" target="_blank" style="font-size: 22px; font-weight: bold; color: rgb(112, 202, 255); text-decoration: none;"></a>
+            <button id="boton-copiar" type="button" style="padding: 6px 12px; font-size: 14px; cursor: pointer; background-color: #eee; color: #333; border: 1px solid #ccc; border-radius: 4px; font-weight: bold;">
+                📋 Copiar
+            </button>
+        </div>
         
         <div id="contenedor-qr" style="margin: 20px 0;">
             <img id="imagen-qr" src="" alt="Código QR" style="border: 4px solid #fff; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); max-width: 150px; display: inline-block;">
