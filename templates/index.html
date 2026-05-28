@@ -38,7 +38,12 @@
           />
         </div>
         <div class="grupo-password">
-          <input id="password-proteccion" type="text" placeholder="Contraseña (opcional)" class="input-form-password">
+          <input
+            id="password-proteccion"
+            type="text"
+            placeholder="Contraseña (opcional)"
+            class="input-form-password"
+          />
         </div>
       </form>
     </div>
@@ -168,16 +173,6 @@
         </p>
       </details>
     </div>
-
-    {% if error %}
-    <script>
-      // Mostramos un popup nativo de Chrome/navegador
-      const irAlInicio = confirm(
-        "AVISO\n\n{{ error }}",
-      );
-
-    </script>
-    {% endif %}
     <script src="/static/main.js"></script>
   </body>
 </html>
