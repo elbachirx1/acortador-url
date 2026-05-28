@@ -173,14 +173,11 @@
         </p>
       </details>
     </div>
+
     {% if error %}
     <script>
-      const irAlinicio = confirm(
-        "Avido\n {{ error }}\n ¿Quieres ir a la página principal?",
-      );
-      if (irAlinicio) {
-        window.location.href = "/";
-      }
+      alert("{{ error }}");
+      window.location.href = "/";
     </script>
     {% endif %}
     <script src="/static/main.js"></script>

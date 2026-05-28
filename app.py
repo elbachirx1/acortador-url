@@ -69,8 +69,8 @@ def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
             password_db = respuesta.data[0].get('password')
             
             if fecha_limite_str:
-                fecha_limite_limpia = fecha_limite_str.replace('Z', '').split('+')[0]
-                fecha_limite = datetime.strptime(fecha_limite_limpia[:19], "%Y-%m-%dT%H:%M:%S")
+                fecha_limite_limpia = fecha_limite_str.replace("T", '').replace('Z', '').split('+')[0]
+                fecha_limite = datetime.strptime(fecha_limite_limpia[:19], "%Y-%m-%d %H:%M:%S")
                 fecha_actual = datetime.now(timezone.utc).replace(tzinfo=None)
                 
                 if fecha_actual > fecha_limite:
