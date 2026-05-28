@@ -71,7 +71,7 @@ def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
             if fecha_limite_str:
                 fecha_limite_limpia = fecha_limite_str.replace('Z', '').split('+')[0]
                 fecha_limite = datetime.strptime(fecha_limite_limpia[:19], "%Y-%m-%dT%H:%M:%S")
-                fecha_actual = datetime.now(timezone.utc)
+                fecha_actual = datetime.now(timezone.utc).replace(tzinfo=None)
                 
                 if fecha_actual > fecha_limite:
                     return render_template('index.html', error="Lo sentimos, este enlace ha caducado de forma definitiva."), 410
