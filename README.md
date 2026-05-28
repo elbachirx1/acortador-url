@@ -1,4 +1,4 @@
-# MasCorto 
+# MásCorto 
 
 MasCorto es una aplicación web de tipo SaaS diseñada para transformar URLs extensas y propensas a errores en cadenas cortas, seguras y fácilmente memorizables bajo un dominio propio.
 
