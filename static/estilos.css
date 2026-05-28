@@ -45,14 +45,15 @@
 
 .input-form {
   flex-grow: 1;
-  padding: 12px 20px;
+  padding: 14px 14px;
   font-size: 15px;
   border: 2px solid #ccc;
   outline: none;
+  box-sizing: border-box;
 }
 
 .boton-acortar {
-  padding: 12px 25px;
+  padding: 14px 15px;
   font-size: 15px;
   cursor: pointer;
   font-weight: bold;
@@ -75,13 +76,15 @@
 }
 
 .input-form-secundario {
-  padding: 10px 12px;
+  padding: 14px 15px;
   font-size: 15px;
   border: 2px solid #ccc;
   width: 100%;
   max-width: 350px;
   outline: none;
   text-align: left;
+  background-color: white;
+  box-sizing: border-box;
 }
 
 .seccion-info {
