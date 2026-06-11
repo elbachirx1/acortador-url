@@ -9,8 +9,7 @@
 ## Características Principales
 
 * **Generación de Enlaces y Códigos QR:** Cada vez que el sistema procesa un enlace original, genera en paralelo un código QR escaneable (150x150px) de forma automática gracias a la integración con una API externa de renderizado de gráficos vectoriales.
-* **Control de Enlaces Temporales:** Permite establecer de manera opcional una fecha y hora exacta para la expiración de la redirección. Cuenta con un algoritmo en el backend sincronizado bajo el estándar de tiempo universal (UTC) para manejar desajustes geográficos de zonas horarias entre el cliente y el servidor en la nube.
-* **Protección de Accesos por Contraseña:** Si un usuario configura un enlace como protegido, el backend intercepta la solicitud HTTP, bloquea la redirección directa al destino y muestra una interfaz web secundaria de validación donde se exige insertar la clave secreta.
+* **Protección de Accesos por Contraseña:** Si un usuario configura un enlace como protegido, el backend intercepta la solicitud HTTP, bloquea la redirección directa al destino y muestra una interfaz web secundaria de validación donde se exige insertar la clave secreta para poder acceder.
 
 ---
 
@@ -29,7 +28,7 @@
 
 ## Estructura de la Base de Datos
 
-El sistema utiliza una tabla central unificada para gestionar las redirecciones y la seguridad.
+El sistema utiliza una tabla central unificada para gestionar las redirecciones y la seguridad de los enlaces.
 
 **Nombre de la tabla:** `urls`
 
@@ -39,7 +38,6 @@ El sistema utiliza una tabla central unificada para gestionar las redirecciones 
 | `created_at` | timestamptz | No Nulo / Incluye zona horaria |
 | `short_code` | text | Único (Indexado para búsquedas rápidas) |
 | `original_url` | text | No Nulo |
-| `expires_at` | timestamptz | Permite NULL (Opcional) |
 | `password` | text | Permite NULL (Opcional) |
 
 ---
