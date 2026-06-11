@@ -1,16 +1,14 @@
-
 import os
 import random
 import string
-from  datetime import datetime, timezone
 from flask import Flask, request, jsonify, redirect, render_template
 from dotenv import load_dotenv
 from supabase import create_client, Client
 
-#  cargar variales del entorno .env
+# cargar variables del entorno .env
 load_dotenv()
 
-#  inicializar flask y supabase
+# inicializar flask y supabase
 app = Flask(__name__)
 
 url: str = os.environ.get("SUPABASE_URL")
@@ -31,7 +29,6 @@ def home():  # renderiza el index.html
 def url_corta():
     data = request.get_json()
     url_larga = data.get('url')
-    fecha_caducidad = data.get('expires_at')
     password_proteccion = data.get('password')
     
     if not url_larga:
@@ -47,35 +44,26 @@ def url_corta():
         supabase.table('urls').insert({
             'short_code': codigo_corto,
             'original_url': url_larga,
-            'expires_at': fecha_caducidad if fecha_caducidad else None,
             'password': password_proteccion if password_proteccion else None
         }).execute()
     
         url_acortada = request.host_url + codigo_corto
         return jsonify({'short_url': url_acortada}), 200
     
-    except:
+    except Exception as e:
+        print("ERROR EN INSERCIÓN:", str(e))
         return jsonify({'ERROR': 'Hubo un error al guardar la URL.'}), 500
          
 
 @app.route('/<short_code>', methods=['GET', 'POST'])
 def redireccionar_a_url(short_code):   # funcion que redirige a la URL original
     try:
-        respuesta = supabase.table('urls').select('original_url', 'expires_at', 'password').eq('short_code', short_code).execute()
+        respuesta = supabase.table('urls').select('original_url', 'password').eq('short_code', short_code).execute()
     
         if len(respuesta.data) > 0:
             url_original = respuesta.data[0]['original_url']
-            fecha_limite_str = respuesta.data[0]['expires_at']
             password_db = respuesta.data[0].get('password')
             
-            if fecha_limite_str:
-                fecha_limite_limpia = fecha_limite_str.replace("T", ' ').replace('Z', '').split('+')[0]
-                fecha_limite = datetime.strptime(fecha_limite_limpia[:19], "%Y-%m-%d %H:%M:%S")
-                fecha_actual = datetime.now(timezone.utc).replace(tzinfo=None)
-                
-                if fecha_actual > fecha_limite:
-                    return render_template('index.html', error="Lo sentimos, este enlace ha caducado de forma definitiva."), 410
-                
             if password_db:
                 if request.method == 'GET':
                     return render_template('password.html', short_code=short_code)
