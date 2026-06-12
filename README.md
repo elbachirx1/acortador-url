@@ -1,4 +1,4 @@
-# MasCorto - Acortador de Enlaces Premium (SaaS)
+# MasCorto - Acortador de Enlaces
 
 **Enlace web del proyecto:** [https://mascorto.onrender.com/](https://mascorto.onrender.com/)
 
